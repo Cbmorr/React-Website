@@ -186,21 +186,10 @@ export const addPartners = partners => ({
   payload: partners
 });
 
-export const postFeedback = (firstname, lastname, phonNum, email, agree, contactType, feedback) => {
-
-  const newFeedback = {
-    firstname: firstname,
-    lastname: lastname,
-    phonNum: phonNum,
-    email: email,
-    agree: agree,
-    contactType: contactType,
-    feedback: feedback
-  };
-
+export const postFeedback = feedback => () => {
   return fetch(baseUrl + 'feedback', {
     method: "POST",
-    body: JSON.stringify(newFeedback),
+    body: JSON.stringify(feedback),
     headers: {
       "Content-Type": "application/json"
     }
@@ -214,11 +203,11 @@ export const postFeedback = (firstname, lastname, phonNum, email, agree, contact
         throw error;
       }
     },
-      error => { throw error; }
-    )
+      error => { throw error; })
     .then(response => response.json())
     .then(response => {
-      alert(`Thank you for your feedback. \n ${JSON.stringify(response)}`)
+      console.log('Feedback: ', response);
+      alert('Thank you for your feedback!\n' + JSON.stringify(response));
     })
     .catch(error => {
       console.log('Feedback: ', error.message);
